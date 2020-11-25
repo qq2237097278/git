@@ -483,6 +483,15 @@ test_expect_success 'push HEAD with non-existent, incomplete dest' '
 
 '
 
+test_expect_success 'push @ with non-existent, incomplete dest' '
+
+	mk_test testrepo &&
+	git checkout master &&
+	git push testrepo @:branch &&
+	check_push_result testrepo $the_commit heads/branch
+
+'
+
 test_expect_success 'push with config remote.*.push = HEAD' '
 
 	mk_test testrepo heads/local &&
@@ -499,6 +508,15 @@ test_expect_success 'push with config remote.*.push = HEAD' '
 	git push &&
 	check_push_result testrepo $the_commit heads/master &&
 	check_push_result testrepo $the_first_commit heads/local
+'
+
+test_expect_success 'push with @' '
+
+	mk_test testrepo heads/master &&
+	git checkout master &&
+	git push testrepo @ &&
+	check_push_result testrepo $the_commit heads/master
+
 '
 
 test_expect_success 'push with remote.pushdefault' '
